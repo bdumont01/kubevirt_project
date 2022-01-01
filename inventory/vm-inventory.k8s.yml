@@ -3,5 +3,4 @@ connections:
 - namespaces:
     - virtual-machines
   kubeconfig: kubeconfig
-#  username: bdumont
-#  password: Vvegv#4800
+
