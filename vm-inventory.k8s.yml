@@ -1,7 +1,9 @@
-plugin: kubernetes.core.k8s
+plugin: kubernetes.core.k8s 
 connections:
 - namespaces:
     - virtual-machines
   kubeconfig: kubeconfig
-#  username: bdumont
-#  password: Vvegv#4800
+  api_key: "sha256~EnKAIHYFkuMijRXUEMmGYLVy9LfYQ36nCT34W3dCAD8"
+  username: bdumont
+#  host: https://api.ocp-cluster.dumont-lab.lan:6443
+# validate_certs: false
