@@ -11,8 +11,8 @@
   tasks:
 
     - name: Log in (obtain access token)
-      community.okd.openshift_auth:
-#      redhat.openshift.openshift_auth:
+#      community.okd.openshift_auth:
+      redhat.openshift.openshift_auth:
         host: "{{ openshift_host }}"
         username: bdumont
         password: "{{ ovirt_password }}"
