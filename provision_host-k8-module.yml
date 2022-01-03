@@ -4,9 +4,9 @@
   become: false
   gather_facts: yes
   vars_files:
-      - /home/bdumont/secrets_folder/ovirt-pass
-      - /home/bdumont/vars/global_vars.yml
-      - /home/bdumont/kubevirt_project/vars/provision_vars.yml
+      - secrets_folder/ovirt-pass
+#      - /home/bdumont/vars/global_vars.yml
+      - vars/provision_vars.yml
 
   tasks:
 
