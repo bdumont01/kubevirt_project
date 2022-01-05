@@ -3,7 +3,11 @@ connections:
 - namespaces:
     - virtual-machines
   kubeconfig: kubeconfig
-  api_key: "sha256~EnKAIHYFkuMijRXUEMmGYLVy9LfYQ36nCT34W3dCAD8"
-  username: bdumont
+  context: admin
+#  api_key: "sha256~z9a_mDEjh419e3_iSCz73Xbp1mdVsMMhuH82EXxyvsg"
+#  api_key: "sha256~EnKAIHYFkuMijRXUEMmGYLVy9LfYQ36nCT34W3dCAD8"
+#  api_key: "sha256~Xw8GrVD4LcJmXFDYadNcIwj14qwliKNXy09b38uV53Q"
+#  username: bdumont
+#  password: Vvegv#4800
 #  host: https://api.ocp-cluster.dumont-lab.lan:6443
-# validate_certs: false
+#  validate_certs: false
