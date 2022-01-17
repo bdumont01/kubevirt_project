@@ -1,0 +1,81 @@
+---
+- name: Provision kubervirt VMs
+  hosts: localhost
+  become: false
+  gather_facts: yes
+  vars_files:
+      - /home/bdumont/secrets_folder/ovirt-pass
+      - /home/bdumont/vars/global_vars.yml
+      - /home/bdumont/kubevirt_project/vars/provision_vars.yml
+
+  tasks:
+
+    - name: Log in (obtain access token)
+#      community.okd.openshift_auth:
+      redhat.openshift.openshift_auth:
+        host: "{{ openshift_host }}"
+        username: bdumont
+        password: "{{ ovirt_password }}"
+        validate_certs: no
+      register: openshift_auth_results
+
+
+    - name: create vms
+      community.kubevirt.kubevirt_vm:
+        name: "vm-{{ vm_name }}"
+        hostname: "vm-{{ vm_name }}"
+        host: "{{ openshift_host }}"
+        api_key: "{{ openshift_auth_results.openshift_auth.api_key }}"
+        validate_certs: false
+        state: running     
+        wait_timeout: 360
+        namespace: virtual-machines
+        memory: 4Gi
+        cpu_cores: 1
+        datavolumes:
+         - name: "{{ vm_name }}-rootdisk"
+           source:
+             pvc:
+               name: rhel8
+               namespace: openshift-virtualization-os-images
+           pvc:
+             accessModes:
+               - ReadWriteMany
+             storage: 30Gi
+             storageClassName: ocs-storagecluster-cephfs
+             volumeMode: Filesystem
+
+        interfaces: 
+          - name: default
+            bridge: {}
+            network:
+              multus:
+                networkName: vm-bridge-network
+
+        cloud_init_nocloud:
+          userData: |
+            #cloud-config
+            user: cloud-user
+            password: "{{ ovirt_password }}"
+            chpasswd:
+              expire: false
+            ssh_authorized_keys:
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCyCNOj0OVfuEqvihcPCrX5O09GoAabwSrIcnaG4+0vJV/u52GsduH/Ycc71DFD2l4DnJeU+M0McukZdmjK0bIyBeXz4/BGspO33wEmJd3U/nVTUbQDG8Z7Nt2ntMmEp+0OHEla/iN4MxzVVWtADxaMPN6O2nMwgVcydXqOkmqjoN9zoxBxHBHsJSHyeaAC7+Ij/IxxdHHITWLakqIYJ7dCbInd8rZK66RoqrOWxZPrJqg9VqccBYIP3BdgDjCTTCYScdkGrA+7eZCo/vJ3aP+yQMHE4nD44PrkM5L9amRR4UwDYeG+7LoQAonCDzYaWzmudNalpMm1NuDzKdxzqWM53vReHK9Z4sa4ZjWN0r2oaB9J/oqKtoPDgRKt1xGJM1tH9KfFZcg2P8PgdMFHi1OplW7wd23xe2yKd854St4tef9RI+6u5ksSS7Kl4nDlzPiqkevcj53B+PyLN0tO4eXPZqKGlsnJZ1K0I8bBc1Vs/u3mb/xvKdlrktlv/LgWA80= bdumont@ansible.dumont-lab.lan
+
+
+
+
+#        disks:
+#          - name: rootdisk 
+#            disk:
+#              bus: virtio
+#            volume:
+#              dataVolume:
+#                name: "{{ vm_name }}-rootdisk"
+
+#            bootorder: 1
+#          - name: cloudinit
+#            disk:
+#              bus: virtio
+#            volume:
+
