@@ -31,13 +31,16 @@
           apiVersion: kubevirt.io/v1alpha3
           kind: VirtualMachine
           metadata:
-            name: "vm-{{ vm_name }}"
+            name: "vm-{{ vm_name }}-{{ item }}"
             namespace: virtual-machines
+            generateName: 
           spec:
             running: false
             template:
-#              metadata:
-#                labels: "kubevirt.io/vm: vm-{{ vm_name }}"
+              metadata:
+                name: "vm-{{ vm_name }}-{{ item }}"
+#                labels: 
+#                  kubevirt.io/vm: "vm-{{ vm_name }}"
               spec:
                 domain:
                   cpu:
@@ -63,7 +66,7 @@
                   resources:
                     requests:
                       memory: 4Gi
-                hostname: "vm-{{ vm_name }}"
+                hostname: "vm-{{ vm_name }}-{{ item }}"
                 networks:
                   - multus:
                       networkName: vm-bridge-network
@@ -101,4 +104,5 @@
                     pvc:
                       name: rhel8
                       namespace: openshift-virtualization-os-images
+      with_sequence: count={{ vm_count }}
 
