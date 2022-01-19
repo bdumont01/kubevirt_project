@@ -39,7 +39,8 @@
             template:
               metadata:
                 name: "vm-{{ vm_name }}-{{ item }}"
-#                labels: 
+                labels: 
+                  compliance_policy: "{{ compliance_type }}"
 #                  kubevirt.io/vm: "vm-{{ vm_name }}"
               spec:
                 domain:
