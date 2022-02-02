@@ -1,6 +1,6 @@
 ---
 - name: Provision kubervirt VMs
-  hosts: localhost
+  hosts: all
   become: false
   gather_facts: no
   vars_files:
