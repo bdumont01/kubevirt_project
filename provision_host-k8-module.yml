@@ -1,8 +1,8 @@
 ---
 - name: Provision kubervirt VMs
-  hosts: all
+  hosts: localhost
   become: false
-  gather_facts: no
+  gather_facts: yes
   vars_files:
       - secrets_folder/ovirt-pass
 #      - /home/bdumont/vars/global_vars.yml
