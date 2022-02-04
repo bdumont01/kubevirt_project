@@ -87,11 +87,11 @@
                             bdumont@ansible.dumont-lab.lan
                     name: cloudinitdisk
                   - dataVolume:
-                      name: "{{ vm_name }}-rootdisk"
+                      name: "{{ vm_name }}-{{ item }}-rootdisk"
                     name: rootdisk
             dataVolumeTemplates:
               - metadata:
-                  name: "{{ vm_name }}-rootdisk"
+                  name: "{{ vm_name }}-{{ item }}-rootdisk"
                 spec:
                   pvc:
                     accessModes:      
