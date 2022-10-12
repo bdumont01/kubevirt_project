@@ -1,4 +1,4 @@
-plugin: kubevirt 
+plugin: community.kubevirt.kubevirt 
 connections:
 - namespaces:
     - virtual-machines
