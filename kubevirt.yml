@@ -1,7 +1,6 @@
-plugin: community.kubevirt.kubevirt 
+plugin: kubernetes.kubevirt.kubevirt
 connections:
-- namespaces:
-    - virtual-machines
-  kubeconfig: kubeconfig
-  context: admin
-
+  - virtctl_proxy: True
+    namespaces:
+      - virtual-machines
+    kubeconfig: kubeconfig
