@@ -1,6 +1,6 @@
 plugin: kubernetes.kubevirt.kubevirt
 connections:
-  - virtctl_proxy: False
+  - virtctl_proxy: True
     namespaces:
       - virtual-machines
     kubeconfig: kubeconfig
