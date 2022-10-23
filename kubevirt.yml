@@ -3,5 +3,5 @@ connections:
   - virtctl_proxy: False
     namespaces:
       - virtual-machines
-    kubeconfig: /home/runner/.ssh/kubeconfig
+    kubeconfig: kubeconfig
 
