@@ -3,5 +3,5 @@ connections:
   - virtctl_proxy: False
     namespaces:
       - virtual-machines
-    kubeconfig: kubeconfig
+    kubeconfig: /kubeconfig/kubeconfig
 
