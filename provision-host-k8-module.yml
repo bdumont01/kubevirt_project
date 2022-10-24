@@ -73,7 +73,9 @@
                 networks:
                   - multus:
                       networkName: vm-bridge-network
-                    name: default
+                    name: vm-net
+                  - name: default
+                    pod: {}
                 volumes:
                   - cloudInitNoCloud:
                       userData: |
