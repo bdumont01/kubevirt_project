@@ -2,11 +2,11 @@
 - name: Provision kubervirt VMs
   hosts: localhost
   become: false
-  gather_facts: yes
+#  gather_facts: yes
   vars_files:
-      - secrets_folder/ovirt-pass
+    - secrets_folder/ovirt-pass
 #      - /home/bdumont/vars/global_vars.yml
-      - vars/provision_vars.yml
+    - vars/provision_vars.yml
 
   tasks:
 
@@ -28,7 +28,7 @@
         state: present  
         wait_timeout: 360
         definition:
-          apiVersion: kubevirt.io/v1alpha3
+          apiVersion: kubevirt.io/v1
           kind: VirtualMachine
           metadata:
             name: "vm-{{ vm_name }}-{{ item }}"
@@ -60,8 +60,10 @@
                     interfaces:
                       - bridge: {}
                         model: virtio
-                        name: default
+                        name: vm-net
     #                    macAddress: {}
+                      - name: default
+                        masquerade: {}
                   machine:
                     type: pc-q35-rhel8.4.0
                   resources:
@@ -80,11 +82,7 @@
                         password: "{{ ovirt_password }}"
                         chpasswd:
                           expire: false
-                        ssh_authorized_keys:
-                          - >-
-                            ssh-rsa
-                            AAAAB3NzaC1yc2EAAAADAQABAAABgQCyCNOj0OVfuEqvihcPCrX5O09GoAabwSrIcnaG4+0vJV/u52GsduH/Ycc71DFD2l4DnJeU+M0McukZdmjK0bIyBeXz4/BGspO33wEmJd3U/nVTUbQDG8Z7Nt2ntMmEp+0OHEla/iN4MxzVVWtADxaMPN6O2nMwgVcydXqOkmqjoN9zoxBxHBHsJSHyeaAC7+Ij/IxxdHHITWLakqIYJ7dCbInd8rZK66RoqrOWxZPrJqg9VqccBYIP3BdgDjCTTCYScdkGrA+7eZCo/vJ3aP+yQMHE4nD44PrkM5L9amRR4UwDYeG+7LoQAonCDzYaWzmudNalpMm1NuDzKdxzqWM53vReHK9Z4sa4ZjWN0r2oaB9J/oqKtoPDgRKt1xGJM1tH9KfFZcg2P8PgdMFHi1OplW7wd23xe2yKd854St4tef9RI+6u5ksSS7Kl4nDlzPiqkevcj53B+PyLN0tO4eXPZqKGlsnJZ1K0I8bBc1Vs/u3mb/xvKdlrktlv/LgWA80=
-                            bdumont@ansible.dumont-lab.lan
+                        ssh_authorized_keys: "{{ ansible_key }}"
                     name: cloudinitdisk
                   - dataVolume:
                       name: "{{ vm_name }}-{{ item }}-rootdisk"
@@ -98,12 +96,12 @@
                       - ReadWriteMany
                     resources:
                       requests:
-                        storage: 30Gi
-                    storageClassName: ocs-storagecluster-cephfs
-                    volumeMode: Filesystem
+                        storage: 35Gi
+                    storageClassName: ocs-storagecluster-ceph-rbd
+                    volumeMode: Block
                   source:      
                     pvc:
-                      name: rhel8
-                      namespace: openshift-virtualization-os-images
+                      name: rhel9-qcow2
+                      namespace: virtual-machines
       with_sequence: count={{ vm_count }}
 
