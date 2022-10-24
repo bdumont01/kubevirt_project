@@ -35,7 +35,7 @@
             namespace: virtual-machines
             generateName: 
           spec:
-            running: false
+            running: true
             template:
               metadata:
                 name: "vm-{{ vm_name }}-{{ item }}"
