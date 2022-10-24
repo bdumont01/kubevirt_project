@@ -81,11 +81,12 @@
                   - cloudInitNoCloud:
                       userData: |
                         #cloud-config
-                        user: cloud-user
+                        user: kubevirt
                         password: "{{ ovirt_password }}"
                         chpasswd:
                           expire: false
-                        ssh_authorized_keys: "{{ ansible_key }}"
+                        ssh_authorized_keys: 
+                          - "{{ ansible_key }}"
                     name: cloudinitdisk
                   - dataVolume:
                       name: "{{ vm_name }}-{{ item }}-rootdisk"
