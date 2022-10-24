@@ -41,6 +41,7 @@
                 name: "vm-{{ vm_name }}-{{ item }}"
                 labels: 
                   compliance_policy: "{{ compliance_type }}"
+                  idm_client: true
 #                  kubevirt.io/vm: "vm-{{ vm_name }}"
               spec:
                 domain:
