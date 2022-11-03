@@ -1,0 +1,96 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  labels:
+    app: "{{ vm_name }}"
+    vm.kubevirt.io/template: rhel9-server-medium
+    vm.kubevirt.io/template.revision: "1"
+    vm.kubevirt.io/template.version: v0.23.4
+    vm.kubevirt.io/template.namespace: openshift
+
+  name: "{{ vm_name }}"
+spec:
+  running: false
+  template:
+    metadata:
+      annotations:
+        vm.kubevirt.io/flavor: medium
+        vm.kubevirt.io/os: rhel9
+        vm.kubevirt.io/workload: server
+      labels:
+        compliance_policy: "{{ compliance_type }}"
+        kubevirt.io/domain: "{{ vm_name }}"
+        kubevirt.io/size: medium
+        kubevirt.io/namespace: virtual-machines
+    spec:
+      domain:
+        cpu:
+          cores: 1
+          sockets: 1
+          threads: 1
+        devices:
+          disks:
+          - disk:
+              bus: virtio
+            name: "{{ vm_name }}-{{ item }}-rootdisk" 
+          - disk:
+              bus: virtio
+            name: cloudinitdisk
+          interfaces:
+          - masquerade: {}
+            name: default
+          - bridge: {}
+            model: virtio
+            name: vm-net
+          networkInterfaceMultiqueue: true
+          rng: {}
+        features:
+          smm:
+            enabled: true
+        firmware:
+          bootloader:
+            efi: {}
+        machine:
+          type: pc-q35-rhel8.4.0
+        resources:
+          requests:
+            memory: 4Gi
+      evictionStrategy: LiveMigrate
+      networks:
+      - name: default
+        pod: {}
+      - multus:
+          networkName: vm-bridge-network
+        name: vm-net
+
+      terminationGracePeriodSeconds: 180
+      volumes:
+      - dataVolume:
+          name: "{{ vm_name }}-{{ item }}-rootdisk"
+        name: "{{ vm_name }}-{{ item }}-rootdisk"
+      - cloudInitNoCloud:
+          userData: |-
+            #cloud-config
+            user: cloud_user
+            password: "{{ ovirt_password }}" 
+            chpasswd: { expire: False }
+            ssh_authorized_keys:
+              - "{{ ansible_key }}"
+        name: cloudinitdisk
+  dataVolumeTemplates:
+  - metadata:
+      name: "{{ vm_name }}-{{ item }}-rootdisk"
+    spec:
+      pvc:
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 35Gi
+        storageClassName: ocs-storagecluster-ceph-rbd
+        volumeMode: Block
+      source:
+        pvc:
+          name: rhel9-qcow2
+          namespace: virtual-machines
+

@@ -1,6 +1,6 @@
-#vm_name: vm-test-new
-vm_name: "{{ ansible_date_time.date }}-{{ ansible_date_time.hour }}-{{ ansible_date_time.minute }}-{{ ansible_date_time.second }}"
-vm_template_name: rhel8-server-medium
+vm_name: rhug-demo-vm.dumont-lab.lan
+#vm_name: "vm-{{ ansible_date_time.date }}-{{ ansible_date_time.hour }}-{{ ansible_date_time.minute }}-{{ ansible_date_time.second }}"
+#vm_template_name: rhel8-server-medium
 openshift_host: https://api.ocp-cluster.dumont-lab.lan:6443
 vm_count: 1
 compliance_type: standard
