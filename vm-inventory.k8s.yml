@@ -2,6 +2,5 @@ plugin: kubernetes.core.k8s
 connections:
 - namespaces:
     - virtual-machines
-  kubeconfig: kubeconfig
-  context: admin
-
+  kubeconfig: /home/runner/.ssh/kubeconfig 
+  context: admin 
