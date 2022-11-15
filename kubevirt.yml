@@ -1,5 +1,5 @@
 plugin: kubernetes.kubevirt.kubevirt
-#host_format: "{name}"
+host_format: "{name}"
 connections:
   - virtctl_proxy: False
     namespaces:
