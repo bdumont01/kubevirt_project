@@ -90,6 +90,6 @@
                     name: cloudinitdisk
                   - name: rootdisk
                     persistentVolumeClaim:
-                      claimName: "{{ pvc-claimName }}"
+                      claimName: "{{ pvc_claimName }}"
  
 
