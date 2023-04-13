@@ -1,0 +1,95 @@
+---
+- name: Provision kubervirt VMs
+  hosts: localhost
+  become: false
+#  gather_facts: yes
+  vars_files:
+    - secrets_folder/ovirt-pass
+#      - /home/bdumont/vars/global_vars.yml
+    - vars/provision_vars.yml
+
+  tasks:
+
+    - name: Log in (obtain access token)
+#      community.okd.openshift_auth:
+      redhat.openshift.openshift_auth:
+        host: "{{ openshift_host }}"
+        username: bdumont
+        password: "{{ ovirt_password }}"
+        validate_certs: no
+      register: openshift_auth_results
+
+
+    - name: create vms
+      kubernetes.core.k8s:
+        host: "{{ openshift_host }}"
+        api_key: "{{ openshift_auth_results.openshift_auth.api_key }}"
+        validate_certs: false
+        state: present  
+        wait_timeout: 360
+        definition:
+          apiVersion: kubevirt.io/v1
+          kind: VirtualMachine
+          metadata:
+            name: "{{ vm_name }}"
+            namespace: virtual-machines
+            generateName: 
+          spec:
+            running: false
+            template:
+              metadata:
+                name: "{{ vm_name }}"
+                labels: 
+                  compliance_policy: "{{ compliance_type }}"
+                  authentication_source: lab_idm
+#                  kubevirt.io/vm: "vm-{{ vm_name }}"
+              spec:
+                domain:
+                  cpu:
+                    cores: 1
+                    sockets: 1
+                    threads: 1
+                  devices:
+                    disks:
+                      - disk:
+                          bus: virtio
+                        name: cloudinitdisk
+                      - bootOrder: 1
+                        disk:
+                          bus: virtio
+                        name: rootdisk
+                    interfaces:
+                      - bridge: {}
+                        model: virtio
+                        name: vm-net
+    #                    macAddress: {}
+                      - name: default
+                        masquerade: {}
+                  machine:
+                    type: pc-q35-rhel8.4.0
+                  resources:
+                    requests:
+                      memory: 4Gi
+                hostname: "{{ vm_name }}"
+                networks:
+                  - multus:
+                      networkName: vm-bridge-network
+                    name: vm-net
+                  - name: default
+                    pod: {}
+                volumes:
+                  - cloudInitNoCloud:
+                      userData: |
+                        #cloud-config
+                        user: kubevirt
+                        password: "{{ ovirt_password }}"
+                        chpasswd:
+                          expire: false
+                        ssh_authorized_keys: 
+                          - "{{ ansible_key }}"
+                    name: cloudinitdisk
+                  - name: rootdisk
+                    persistentVolumeClaim:
+                      claimName: "{{ pvc-claimName }}"
+ 
+
