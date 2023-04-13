@@ -32,7 +32,7 @@
           kind: VirtualMachine
           metadata:
             name: "{{ vm_name }}"
-            namespace: virtual-machines
+            namespace: "{{ vm_namepace }}"
             generateName: 
           spec:
             running: false
@@ -46,7 +46,7 @@
               spec:
                 domain:
                   cpu:
-                    cores: 1
+                    cores: "{{ number_vcpus }}"
                     sockets: 1
                     threads: 1
                   devices:
@@ -69,7 +69,7 @@
                     type: pc-q35-rhel8.4.0
                   resources:
                     requests:
-                      memory: 4Gi
+                      memory: "{{ memory_size }}"
                 hostname: "{{ vm_name }}"
                 networks:
                   - multus:
@@ -93,3 +93,4 @@
                       claimName: "{{ pvc_claimname }}"
  
 
+ 
