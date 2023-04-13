@@ -4,4 +4,4 @@ vm_name: nameme
 openshift_host: https://api.ocp-cluster.dumont-lab.lan:6443
 vm_count: 1
 compliance_type: standard
-pvc-claimName: name-of-pvcClaim
+pvc_claimname: name-of-pvcClaim
