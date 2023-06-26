@@ -1,0 +1,6 @@
+vault-pass
+inventory.yml
+artifacts/*
+ansible-navigator.log
+galaxy.yml
+*.tar.gz
