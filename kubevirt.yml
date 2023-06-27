@@ -4,8 +4,8 @@ connections:
   - virtctl_proxy: False
     namespaces:
       - virtual-machines
-#    kubeconfig: /home/runner/.ssh/kubeconfig
-    kubeconfig: kubeconfig
+    kubeconfig: /home/runner/.ssh/kubeconfig
+#    kubeconfig: kubeconfig
     context: admin
     network_name: vm-net
 
