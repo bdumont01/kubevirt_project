@@ -31,14 +31,14 @@
           apiVersion: kubevirt.io/v1
           kind: VirtualMachine
           metadata:
-            name: "vm-{{ vm_name }}-{{ item }}"
+            name: "{{ vm_name }}-{{ item }}"
             namespace: "{{ vm_namespace }}"
             generateName: 
           spec:
             running: false
             template:
               metadata:
-                name: "vm-{{ vm_name }}-{{ item }}"
+                name: "{{ vm_name }}-{{ item }}"
                 labels: 
                   compliance_policy: "{{ compliance_type }}"
                   authentication_source: lab_idm
@@ -70,7 +70,7 @@
                   resources:
                     requests:
                       memory: 4Gi
-                hostname: "vm-{{ vm_name }}-{{ item }}"
+                hostname: "{{ vm_name }}-{{ item }}"
                 networks:
                   - multus:
                       networkName: vm-bridge-network
@@ -88,7 +88,7 @@
                         ssh_authorized_keys: 
                           - "{{ ansible_key }}"
                         hostname: "{{ vm_name }}"
-                        fqdn: "{{ vm_name }}.dumont-lab.lan"
+                        fqdn: "{{ vm_name }}-{{ item }}.dumont-lab.lan"
                         prefer_fqdn_over_hostname: true
                     name: cloudinitdisk
                   - dataVolume:
