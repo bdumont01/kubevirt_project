@@ -99,7 +99,7 @@
                     name: rootdisk
                   - name: discovery-iso
                     persistentVolumeClaim:
-                      claimname: hosted-cluster-1-discovery.iso
+                      claimName: hosted-cluster-1-discovery.iso
                       namespace: openshift-virtualization-os-images
             dataVolumeTemplates:
               - metadata:
