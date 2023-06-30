@@ -46,9 +46,9 @@
               spec:
                 domain:
                   cpu:
-                    cores: 4
+                    cores: "{{ vCPUs }}"
                     sockets: 1
-                    threads: 2
+                    threads: 1
                   devices:
                     disks:
                       - disk:
@@ -69,7 +69,7 @@
                     type: pc-q35-rhel8.4.0
                   resources:
                     requests:
-                      memory: 8Gi
+                      memory: "{{ memory }}"
                 hostname: "{{ vm_name }}-{{ item }}"
                 networks:
                   - multus:
@@ -103,12 +103,12 @@
                       - ReadWriteMany
                     resources:
                       requests:
-                        storage: 100Gi
+                        storage: 35Gi
                     storageClassName: ocs-storagecluster-ceph-rbd
                     volumeMode: Block
                   source:      
                     pvc:
-                      name: hosted-cluster-1-discovery.iso
-                      namespace: openshift-virtualization-os-images
+                      name: "{{ pvc_claimname }}"
+                      namespace: virtual-machines
       with_sequence: count={{ vm_count }}
 
