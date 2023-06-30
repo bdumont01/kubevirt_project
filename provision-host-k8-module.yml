@@ -46,7 +46,7 @@
               spec:
                 domain:
                   cpu:
-                    cores: "{{ vCPUs }}"
+                    cores: "{{ vCPUs | int }}"
                     sockets: 1
                     threads: 1
                   devices:
