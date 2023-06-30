@@ -46,9 +46,9 @@
               spec:
                 domain:
                   cpu:
-                    cores: 1
+                    cores: 4
                     sockets: 1
-                    threads: 1
+                    threads: 2
                   devices:
                     disks:
                       - disk:
@@ -69,7 +69,7 @@
                     type: pc-q35-rhel8.4.0
                   resources:
                     requests:
-                      memory: 4Gi
+                      memory: 8Gi
                 hostname: "{{ vm_name }}-{{ item }}"
                 networks:
                   - multus:
@@ -103,7 +103,7 @@
                       - ReadWriteMany
                     resources:
                       requests:
-                        storage: 35Gi
+                        storage: 100Gi
                     storageClassName: ocs-storagecluster-ceph-rbd
                     volumeMode: Block
                   source:      
