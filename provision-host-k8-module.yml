@@ -108,7 +108,7 @@
                     volumeMode: Block
                   source:      
                     pvc:
-                      name: "{{ pvc_claimname }}"
-                      namespace: virtual-machines
+                      name: hosted-cluster-1-discovery.iso
+                      namespace: openshift-virtualization-os-images
       with_sequence: count={{ vm_count }}
 
