@@ -31,14 +31,14 @@
           apiVersion: kubevirt.io/v1
           kind: VirtualMachine
           metadata:
-            name: "{{ vm_name }}-{{ item }}"
+            name: "{{ vm_name }}-{{ item }}.dumont-lab.lan"
             namespace: "{{ vm_namespace }}"
             generateName: 
           spec:
             running: false
             template:
               metadata:
-                name: "{{ vm_name }}-{{ item }}"
+                name: "{{ vm_name }}-{{ item }}.dumont-lab.lan"
                 labels: 
                   compliance_policy: "{{ compliance_type }}"
                   authentication_source: lab_idm
