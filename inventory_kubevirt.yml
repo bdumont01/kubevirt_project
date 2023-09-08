@@ -1,0 +1,6 @@
+plugin: kubevirt.core.kubevirt
+connections:
+- namespaces:
+  - virtual_machines
+  network_name: vm-network
+  
