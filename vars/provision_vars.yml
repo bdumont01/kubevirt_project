@@ -5,5 +5,5 @@ vm_namespace: virtual-machines
 openshift_host: https://api.ocp-cluster.dumont-lab.lan:6443
 vm_count: 1
 compliance_type: standard
-pvc_claimname: rhel9-qcow2
+pvc_claimname: rhel-93-pvc
 pvc_namespace: virtual-machines
