@@ -1,11 +1,9 @@
 plugin: kubevirt.core.kubevirt
 host_format: "{name}"
 connections:
-  - virtctl_proxy: False
-    namespaces:
-      - virtual-machines
-    kubeconfig: /home/runner/.ssh/kubeconfig
+  - namespaces:
+    - virtual-machines
+    kubeconfig: /etc/kubeconfig
 #    kubeconfig: /home/bdumont
     context: admin
-    network_name: vm-net
-
+#    network_name: vm-net
