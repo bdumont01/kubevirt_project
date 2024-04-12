@@ -14,7 +14,7 @@
 #      community.okd.openshift_auth:
       redhat.openshift.openshift_auth:
         host: "{{ openshift_host }}"
-        username: bdumont
+        username: "{{ openshift_user }}"
         password: "{{ ovirt_password }}"
         validate_certs: no
       register: openshift_auth_results
