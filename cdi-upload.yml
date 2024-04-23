@@ -1,0 +1,15 @@
+---
+- name: upload a qcow to openshift
+  hosts: localhost
+  become: false
+  gather_facts: no
+  vars_files:
+    - secrets_folder/ovirt-pass
+#      - /home/bdumont/vars/global_vars.yml
+    - vars/provision_vars.yml
+    - secrets_folder/cluster_vars.yml
+
+  tasks:
+    - name: repeat cdi upload for clusters
+      ansible.builtin.include_tasks: cdi-upload-tasks.yml
+      loop: "{{ cluster_info }}"

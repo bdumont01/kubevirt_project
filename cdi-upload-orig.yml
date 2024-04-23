@@ -1,0 +1,73 @@
+---
+- name: upload a qcow to openshift
+  hosts: localhost
+  become: false
+  gather_facts: no
+  vars_files:
+    - secrets_folder/ovirt-pass
+#      - /home/bdumont/vars/global_vars.yml
+    - vars/provision_vars.yml
+    - secrets_folder/cluster_vars.yml
+
+  tasks:
+ 
+    - name: Log in (obtain access token)
+#      community.okd.openshift_auth:
+      redhat.openshift.openshift_auth:
+        host: "{{ openshift_host  }}"     
+        username: "{{ openshift_user }}"
+        password: "{{ovirt_password }}"
+        validate_certs: no
+      register: openshift_auth_results
+
+    - name: create Data Volume
+      kubernetes.core.k8s:
+        host: "{{ openshift_host }}"
+        api_key: "{{ openshift_auth_results.openshift_auth.api_key }}"
+        validate_certs: false
+        state: present 
+        kind: datavolume
+        wait_timeout: 360
+        definition:
+          apiVersion: cdi.kubevirt.io/v1beta1
+          kind: DataVolume
+          metadata:
+            name: customer-qcow
+            namespace: "{{ vm_namespace }}"
+          spec:
+            source:
+              upload: {}
+            storage:
+              storageClassName: ocs-storagecluster-ceph-rbd
+              resources:
+                requests:
+                  storage: 20Gi
+              volumeMode: Block
+
+    - name: Upload token
+      kubernetes.core.k8s:
+        host: "{{ openshift_host }}"
+        api_key: "{{ openshift_auth_results.openshift_auth.api_key }}"
+        validate_certs: false
+        state: present
+        definition:
+          apiVersion: upload.cdi.kubevirt.io/v1beta1
+          kind: UploadTokenRequest
+          metadata:
+            name: customer-qcow-upload-token
+            namespace: "{{ vm_namespace }}"
+          spec:
+            pvcName: customer-qcow
+      register: my_var_with_return_value
+
+    - name: Upload rhel9-qcow
+      ansible.builtin.uri:
+        url: "https://cdi-uploadproxy-openshift-cnv.apps.ocp-cluster.dumont-lab.lan/v1beta1/upload"
+        method: POST
+        validate_certs: false
+        headers:
+          Authorization: "Bearer  {{ my_var_with_return_value.result.status.token }}"
+        src: /home/bdumont/kubevirt_project/rhel-9.3-x86_64-kvm.qcow2 
+        timeout: 300
+      register: uri_response  
+

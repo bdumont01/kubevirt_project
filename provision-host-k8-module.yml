@@ -69,7 +69,7 @@
                     type: pc-q35-rhel8.4.0
                   resources:
                     requests:
-                      memory: "{{ memory }}"
+                      memory: 4Gi
                 hostname: "{{ vm_name }}-{{ item }}"
                 networks:
                   - multus:
@@ -108,7 +108,7 @@
                     volumeMode: Block
                   source:      
                     pvc:
-                      name: "{{ pvc_claimname }}"
+                      name: "{{ image_name }}"
                       namespace: virtual-machines
       with_sequence: count={{ vm_count }}
 
