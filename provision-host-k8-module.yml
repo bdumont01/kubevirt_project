@@ -46,7 +46,7 @@
               spec:
                 domain:
                   cpu:
-                    cores: 2
+                    cores: "{{ cores }}"
                     sockets: 1
                     threads: 1
                   devices:
@@ -69,7 +69,7 @@
                     type: pc-q35-rhel8.4.0
                   resources:
                     requests:
-                      memory: 4Gi
+                      memory: "{{ memory }}"
                 hostname: "{{ vm_name }}-{{ item }}"
                 networks:
                   - multus:

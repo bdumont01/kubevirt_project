@@ -27,11 +27,11 @@
             source:
               upload: {}
             storage:
-              storageClassName: ocs-storagecluster-ceph-rbd
+              storageClassName: "{{ storage_class }}"
               resources:
                 requests:
                   storage: 20Gi
-              volumeMode: Block
+#              volumeMode: Block
 
     - name: Upload token
       kubernetes.core.k8s:

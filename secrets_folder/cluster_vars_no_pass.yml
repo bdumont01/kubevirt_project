@@ -1,0 +1,9 @@
+cluster_info:
+  - openshift_host: "cluster1-ocp-host-name"
+    openshift_user: openshift-user
+    password: "password"
+    storage_class: ocs-storagecluster-ceph-rbd
+  - openshift_host: "cluster2-ocp-host-name"
+    openshift_user: openshift-user
+    password: "password"
+    storage_class: lvms-vg1
