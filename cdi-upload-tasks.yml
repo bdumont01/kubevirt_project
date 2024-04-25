@@ -23,11 +23,13 @@
           metadata:
             name: "{{ image_name }}"
             namespace: "{{ vm_namespace }}"
+            annotations:
+              cdi.kubevirt.io/storage.bind.immediate.requested: "true"
           spec:
             source:
               upload: {}
             storage:
-              storageClassName: "{{ storage_class }}"
+              storageClassName: "{{ item.storage_class }}"
               resources:
                 requests:
                   storage: 20Gi
