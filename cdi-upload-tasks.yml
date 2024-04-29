@@ -50,6 +50,45 @@
           spec:
             pvcName: "{{ image_name }}"
       register: my_var_with_return_value
+    
+    - name: print register
+      ansible.builtin.debug:
+        var: my_var_with_return_value
+
+# these next tasks will get the cdi uploader pod name and make sure it is running before continuing with the upload        
+
+    - name: get cdi upload pod name
+      kubernetes.core.k8s_info:
+        host: "https://api.{{ item.openshift_host  }}:6443"
+        api_key: "{{ openshift_auth_results.openshift_auth.api_key }}"
+        validate_certs: false
+        namespace: "{{ vm_namespace }}"
+        kind: Pod
+        label_selectors:
+          - app = containerized-data-importer
+      register: containerized_data_importer_pod
+
+    - name: set fact
+      ansible.builtin.set_fact:
+        cdi_pod_resources: "{{ containerized_data_importer_pod.resources }}"
+
+    - name: set fact pod name
+      ansible.builtin.set_fact:
+        cdi_pod_name: "{{ cdi_pod_resources | json_query(\"[?kind == 'Pod'].metadata.name\")  }}"
+
+
+    - name: wait until cdi pod is running 
+      kubernetes.core.k8s_info:
+        host: "https://api.{{ item.openshift_host  }}:6443"
+        api_key: "{{ openshift_auth_results.openshift_auth.api_key }}"
+        validate_certs: false
+        namespace: "{{ vm_namespace }}"
+        kind: Pod    
+        name: "{{ cdi_pod_name[0] }}"
+      register: cdi_pod_status
+      until: cdi_pod_status|json_query('resources[*].status.phase')|unique == ["Running"]
+
+# Perform the uploade
 
     - name: Upload rhel9-qcow
       ansible.builtin.uri:
@@ -58,7 +97,7 @@
         validate_certs: false
         headers:
           Authorization: "Bearer  {{ my_var_with_return_value.result.status.token }}"
-        src: /home/runner/files/rhel-9.3-x86_64-kvm.qcow2 
+        src: /home/bdumont/kubevirt_project/rhel-9.3-x86_64-kvm.qcow2 
         timeout: 300
       register: uri_response  
 
