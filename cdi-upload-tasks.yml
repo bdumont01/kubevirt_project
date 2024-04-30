@@ -88,7 +88,7 @@
       register: cdi_pod_status
       until: cdi_pod_status|json_query('resources[*].status.phase')|unique == ["Running"]
 
-# Perform the uploade
+# Perform the upload
 
     - name: Upload rhel9-qcow
       ansible.builtin.uri:
