@@ -1,9 +1,0 @@
-plugin: kubevirt.core.kubevirt
-host_format: "{name}"
-connections:
-  - namespaces:
-    - virtual-machines
-    kubeconfig: /etc/kubeconfig
-#    kubeconfig: /home/bdumont
-    context: admin
-#    network_name: vm-net

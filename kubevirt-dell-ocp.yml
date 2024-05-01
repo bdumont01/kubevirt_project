@@ -1,0 +1,9 @@
+plugin: redhat.openshift_virtualization.kubevirt
+host_format: "{name}"
+connections:
+  - namespaces:
+    - virtual-machines
+#    kubeconfig: /etc/ansible/ocp-cluster.kubeconfig
+    kubeconfig: /etc/ansible/dell-ocp-kubeconfig
+    context: admin
+#    network_name: vm-net
