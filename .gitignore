@@ -3,4 +3,5 @@ inventory.yml
 artifacts/*
 ansible-navigator.log
 galaxy.yml
+ansible.cfg
 *.tar.gz
