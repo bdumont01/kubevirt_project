@@ -5,4 +5,3 @@ ansible-navigator.log
 galaxy.yml
 ansible.cfg
 *.tar.gz
-ansible.cfg
