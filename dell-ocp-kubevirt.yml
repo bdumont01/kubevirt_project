@@ -4,6 +4,6 @@ connections:
   - namespaces:
     - virtual-machines
 #    kubeconfig: /etc/ansible/ocp-cluster.kubeconfig
-    kubeconfig: /etc/ansible/dell-ocp-kubeconfig
+    kubeconfig: dell-ocp-kubeconfig
     context: admin
 #    network_name: vm-net
