@@ -61,10 +61,10 @@
                           bus: virtio
                         name: rootdisk
                     interfaces:
-#                      - bridge: {}
-#                        model: virtio
-#                        name: vm-net
-#                        macAddress: {}
+                      - bridge: {}
+                        model: virtio
+                        name: vm-net
+                        macAddress: {}
                       - name: default
                         masquerade: {}
                   machine:
@@ -74,9 +74,9 @@
                       memory: "{{ memory }}"
                 hostname: "{{ vm_name }}-{{ item }}"
                 networks:
-#                  - multus:
-#                      networkName: vm-bridge-network
-#                    name: vm-net
+                  - multus:
+                      networkName: vm-bridge-network
+                    name: vm-net
                   - name: default
                     pod: {}
                 volumes:
