@@ -64,7 +64,7 @@
                       - bridge: {}
                         model: virtio
                         name: vm-net
-                        macAddress: {}
+#                        macAddress: {}
                       - name: default
                         masquerade: {}
                   machine:
