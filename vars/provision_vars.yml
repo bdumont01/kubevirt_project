@@ -7,4 +7,6 @@ compliance_type: standard
 rhel_version: rhel9
 openshift_user: bdumont
 vm_namespace: virtual-machines
-image_name: new-image
+image_name: fedora-ansible-developer
+cores: 2
+memory: 4Gi

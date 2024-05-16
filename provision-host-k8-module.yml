@@ -44,6 +44,8 @@
                   authentication_source: lab_idm
 #                  kubevirt.io/vm: "vm-{{ vm_name }}"
               spec:
+                nodeSelector:
+                  node_type: g7
                 domain:
                   cpu:
                     cores: "{{ cores }}"
@@ -62,7 +64,7 @@
                       - bridge: {}
                         model: virtio
                         name: vm-net
-    #                    macAddress: {}
+ #                       macAddress: {}
                       - name: default
                         masquerade: {}
                   machine:
