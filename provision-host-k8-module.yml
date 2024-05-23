@@ -35,7 +35,7 @@
             namespace: "{{ vm_namespace }}"
             generateName: 
           spec:
-            running: false
+            running: true
             template:
               metadata:
                 name: "{{ vm_name }}-{{ item }}.dumont-lab.lan"
@@ -112,5 +112,7 @@
                     pvc:
                       name: "{{ image_name }}"
                       namespace: virtual-machines
+      register: vm_state
+      until: vm_state|json_query('resources[*].status.phase')|unique == ["Running"]
       with_sequence: count={{ vm_count }}
 
