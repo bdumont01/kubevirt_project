@@ -97,7 +97,7 @@
         validate_certs: false
         headers:
           Authorization: "Bearer  {{ my_var_with_return_value.result.status.token }}"
-        src: /home/runner/files/rhel-9.3-x86_64-kvm.qcow2 
+        src: /home/runner/files/rhel-9.4-x86_64-kvm.qcow2 
         timeout: 300
       register: uri_response  
 
