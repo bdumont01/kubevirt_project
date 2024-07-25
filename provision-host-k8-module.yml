@@ -106,7 +106,7 @@
                     resources:
                       requests:
                         storage: 35Gi
-                    storageClassName: ocs-storagecluster-ceph-rbd
+                    storageClassName: "{{ storage_class }}"
                     volumeMode: Block
                   source:      
                     pvc:

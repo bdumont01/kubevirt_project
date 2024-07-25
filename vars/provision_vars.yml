@@ -10,3 +10,4 @@ vm_namespace: virtual-machines
 image_name: rhel-93-pvc
 cores: 2
 memory: 4Gi
+storage_class: ocs-storagecluster-ceph-rbd
