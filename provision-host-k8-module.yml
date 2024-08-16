@@ -63,7 +63,7 @@
                     interfaces:
                       - bridge: {}
                         model: virtio
-                        name: vm-net
+                        name: ovs-br1
 #                        macAddress: {}
                       - name: default
                         masquerade: {}
@@ -76,11 +76,16 @@
                 networks:
                   - multus:
                       networkName: vm-bridge-network
-                    name: vm-net
+                    name: ovs-br1
                   - name: default
                     pod: {}
                 volumes:
                   - cloudInitNoCloud:
+                      networkData: |
+                        version: 2
+                        ethernets:
+                          eth1:
+                            dhcp4: true
                       userData: |
                         #cloud-config
                         user: kubevirt
