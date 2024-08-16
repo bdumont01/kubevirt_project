@@ -110,7 +110,7 @@
                       - ReadWriteOnce
                     resources:
                       requests:
-                        storage: 35Gi
+                        storage: 20Gi
                     storageClassName: "{{ storage_class }}"
                     volumeMode: Block
                   source:      
