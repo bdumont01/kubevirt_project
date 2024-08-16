@@ -97,7 +97,7 @@
                         hostname: "{{ vm_name }}"
                         fqdn: "{{ vm_name }}-{{ item }}.dumont-lab.lan"
                         prefer_fqdn_over_hostname: true
-#                    name: cloudinitdisk
+                    name: cloudinitdisk
                   - dataVolume:
                       name: "{{ vm_name }}-{{ item }}-rootdisk"
                     name: rootdisk
