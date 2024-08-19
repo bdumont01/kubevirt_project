@@ -1,7 +1,7 @@
 #vm_name: practice-demo
 vm_name: "vm-{{ ansible_date_time.date }}-{{ ansible_date_time.hour }}-{{ ansible_date_time.minute }}-{{ ansible_date_time.second }}"
 #vm_template_name: rhel8-server-medium
-openshift_host: https://api.ocp-cluster.dumont-lab.lan:6443
+openshift_host: https://api.g7-sno1.dumont-lab.lan:6443
 vm_count: 1
 compliance_type: standard
 rhel_version: rhel9
@@ -10,4 +10,4 @@ vm_namespace: virtual-machines
 image_name: rhel-93-pvc
 cores: 2
 memory: 4Gi
-storage_class: ocs-storagecluster-ceph-rbd
+storage_class: lvm-immediate
