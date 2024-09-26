@@ -41,7 +41,7 @@
                 name: "{{ vm_name }}-{{ item }}.dumont-lab.lan"
                 labels: 
                   compliance_policy: "{{ compliance_type }}"
-                  authentication_source: lab_idm
+                  authentication_source: lab_idm-1
 #                  kubevirt.io/vm: "vm-{{ vm_name }}"
               spec:
                 domain:
