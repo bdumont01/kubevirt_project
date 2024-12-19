@@ -18,7 +18,9 @@
         endpoint_url: "http://{{ s3_host }}"
         bucket_name: images
         validate_certs: false
-
+    - name: Pause for 2 minutes to find file
+      ansible.builtin.pause:
+        seconds: 120
     - name: Download file to tmp location
       amazon.aws.s3_object:
         aws_access_key: "{{ s3_user }}"
