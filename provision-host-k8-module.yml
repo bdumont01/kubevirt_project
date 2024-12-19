@@ -73,7 +73,7 @@
                 hostname: "{{ vm_name }}-{{ item }}"
                 networks:
                   - multus:
-                      networkName: vm-bridge-network
+                      networkName: vm-network
                     name: ovs-br1
                   - name: default
                     pod: {}
@@ -84,6 +84,8 @@
                         ethernets:
                           eth1:
                             dhcp4: true
+                          eth0:
+                            dhcp4: true
                       userData: |
                         #cloud-config
                         user: kubevirt
@@ -91,7 +93,7 @@
                         chpasswd:
                           expire: false
                         ssh_authorized_keys: 
-                          - "{{ ansible_key }}"
+                          - "{{ ansible_pub_key }}"
                         hostname: "{{ vm_name }}"
                         fqdn: "{{ vm_name }}-{{ item }}.dumont-lab.lan"
                         prefer_fqdn_over_hostname: true
@@ -105,7 +107,7 @@
                 spec:
                   pvc:
                     accessModes:      
-                      - ReadWriteOnce
+                      - ReadWriteMany
                     resources:
                       requests:
                         storage: 20Gi

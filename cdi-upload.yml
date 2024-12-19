@@ -10,6 +10,7 @@
     - secrets_folder/cluster_vars.yml
 
   tasks:
+       
     - name: repeat cdi upload for clusters
       ansible.builtin.include_tasks: cdi-upload-tasks.yml
       loop: "{{ cluster_info }}"

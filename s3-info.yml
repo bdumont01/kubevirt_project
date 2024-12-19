@@ -1,0 +1,30 @@
+- name: Download file from S3 bucket
+  hosts: localhost
+  become: false
+#  gather_facts: yes
+  vars_files:
+    - secrets_folder/ovirt-pass
+#      - /home/bdumont/vars/global_vars.yml
+    - vars/provision_vars.yml
+  vars:
+    - s3_host: 192.168.77.21:9000
+
+  tasks:
+
+    - name: Retrieve a list of objects in S3 bucket
+      amazon.aws.s3_object_info:
+        aws_access_key: "{{ s3_user }}"
+        secret_key: "{{ s3_password }}"
+        endpoint_url: "http://{{ s3_host }}"
+        bucket_name: images
+        validate_certs: false
+
+    - name: Download file to tmp location
+      amazon.aws.s3_object:
+        aws_access_key: "{{ s3_user }}"
+        secret_key: "{{ s3_password }}"
+        endpoint_url: "http://{{ s3_host }}"
+        bucket: images
+        object: rhel-9.5-x86_64-kvm.qcow2
+        dest: /mnt/files/rhel-9.5-x86_64-kvm.qcow2
+        mode: get
