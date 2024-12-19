@@ -26,5 +26,5 @@
         endpoint_url: "http://{{ s3_host }}"
         bucket: images
         object: rhel-9.5-x86_64-kvm.qcow2
-        dest: /mnt/files/
+        dest: /mnt/files
         mode: get
