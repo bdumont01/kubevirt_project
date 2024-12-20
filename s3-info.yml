@@ -28,7 +28,7 @@
         endpoint_url: "http://{{ s3_host }}"
         bucket: images
         object: rhel-9.5-x86_64-kvm.qcow2
-        dest: /home/bdumont/aap/controller/data/rhel-9.5-x86_64-kvm.qcow2
+        dest: /home/bdumont/aap/controller/data/job_execution/rhel-9.5-x86_64-kvm.qcow2
         mode: get
 
     - name: Pause for 2 minutes to find file
