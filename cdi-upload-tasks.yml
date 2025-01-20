@@ -86,7 +86,7 @@
         kind: Pod    
         name: "{{ cdi_pod_name[0] }}"
       register: cdi_pod_status
-      until: cdi_pod_status|json_query('resources[*].status.phase')|unique == ["Running"]
+  #    until: cdi_pod_status|json_query('resources[*].status.phase')|unique == ["Running"]
 
 # Perform the upload
 
@@ -97,7 +97,7 @@
         validate_certs: false
         headers:
           Authorization: "Bearer  {{ my_var_with_return_value.result.status.token }}"
-        src: /home/runner/files/rhel-9.4-x86_64-kvm.qcow2 
+        src: "vars/{{ image_file_name }}" 
         timeout: 300
       register: uri_response  
 

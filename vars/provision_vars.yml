@@ -8,6 +8,7 @@ rhel_version: rhel9
 openshift_user: bdumont
 vm_namespace: virtual-machines
 image_name: rhel-95-pvc
+image_file_name: rhel-9.5-x86_64-kvm.qcow2
 cores: 2
 memory: 4Gi
 storage_class: longhorn-migratable
