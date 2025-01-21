@@ -1,11 +1,7 @@
 plugin: redhat.openshift_virtualization.kubevirt
 host_format: "{name}"
-connections:
-#  - host: https://api.ocp-cluster.dumont-lab.lan:6443
-  - namespaces:
-    - virtual-machines
-#    kubeconfig: /home/bdumont/kubeconfig_files/ocp-cluster.kubeconfig
-#    kubeconfig: ocp-cluster.kubeconfig
-    kubeconfig: /etc/ansible/dell-ocp-kubeconfig
-    context: admin
-#    network_name: vm-net
+namespaces:
+  - virtual-machines
+kubeconfig: /etc/ansible/ocp-cluster.kubeconfig
+context: 'admin'
+validate_certs: false
