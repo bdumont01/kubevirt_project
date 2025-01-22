@@ -5,6 +5,6 @@ namespaces:
 kubeconfig: /etc/ansible/ocp-cluster.kubeconfig
 context: 'admin'
 network_name: 
-  - ovs-br1
+  - eth0
 validate_certs: false
 
