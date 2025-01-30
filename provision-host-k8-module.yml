@@ -63,8 +63,6 @@
                         model: virtio
                         name: ovs-br1
 #                        macAddress: {}
-                      - name: default
-                        masquerade: {}
                   machine:
                     type: pc-q35-rhel8.4.0
                   resources:
@@ -75,15 +73,11 @@
                   - multus:
                       networkName: vm-network
                     name: ovs-br1
-                  - name: default
-                    pod: {}
                 volumes:
                   - cloudInitNoCloud:
                       networkData: |
                         version: 2
                         ethernets:
-                          eth1:
-                            dhcp4: true
                           eth0:
                             dhcp4: true
                       userData: |
@@ -106,13 +100,13 @@
                   name: "{{ vm_name }}-{{ item }}-rootdisk"
                 spec:
                   pvc:
-                    accessModes:      
-                      - ReadWriteMany
+#                    accessModes:      
+#                      - ReadWriteMany
                     resources:
                       requests:
                         storage: 20Gi
                     storageClassName: "{{ storage_class }}"
-                    volumeMode: Block
+                    volumeMode: "{{ volume_mode }}"
                   source:      
                     pvc:
                       name: "{{ image_name }}"
