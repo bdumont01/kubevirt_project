@@ -100,8 +100,8 @@
                   name: "{{ vm_name }}-{{ item }}-rootdisk"
                 spec:
                   pvc:
-#                    accessModes:      
-#                      - ReadWriteMany
+                    accessModes:      
+                      - "{{ access_mode }}"
                     resources:
                       requests:
                         storage: 20Gi
