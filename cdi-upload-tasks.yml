@@ -23,8 +23,8 @@
           metadata:
             name: "{{ image_name }}"
             namespace: "{{ vm_namespace }}"
-            annotations:
-              cdi.kubevirt.io/storage.bind.immediate.requested: "true"
+#            annotations:
+#              cdi.kubevirt.io/storage.bind.immediate.requested: "true"
           spec:
             source:
               upload: {}
@@ -33,7 +33,7 @@
               resources:
                 requests:
                   storage: 20Gi
-#              volumeMode: Block
+ #             volumeMode: Block
 
     - name: Upload token
       kubernetes.core.k8s:
@@ -68,6 +68,10 @@
           - app = containerized-data-importer
       register: containerized_data_importer_pod
 
+    - name: print register for cdi pod name
+      ansible.builtin.debug:
+        var: containerized_data_importer_pod
+
     - name: set fact
       ansible.builtin.set_fact:
         cdi_pod_resources: "{{ containerized_data_importer_pod.resources }}"
@@ -86,7 +90,7 @@
         kind: Pod    
         name: "{{ cdi_pod_name[0] }}"
       register: cdi_pod_status
-  #    until: cdi_pod_status|json_query('resources[*].status.phase')|unique == ["Running"]
+      until: cdi_pod_status|json_query('resources[*].status.phase')|unique == ["Running"]
 
 # Perform the upload
 

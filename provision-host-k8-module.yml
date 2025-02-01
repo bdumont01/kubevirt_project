@@ -104,7 +104,7 @@
                       - "{{ access_mode }}"
                     resources:
                       requests:
-                        storage: 20Gi
+                        storage: "{{ disk_size }}"
                     storageClassName: "{{ storage_class }}"
                     volumeMode: "{{ volume_mode }}"
                   source:      
