@@ -14,3 +14,4 @@ memory: 4Gi
 storage_class: longhorn-migratable
 volume_mode: Block
 disk_size: 25Gi
+access_mode: ReadWriteMany

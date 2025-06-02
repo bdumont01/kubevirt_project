@@ -62,6 +62,7 @@
                       - bridge: {}
                         model: virtio
                         name: ovs-br1
+                        state: down
 #                        macAddress: {}
                   machine:
                     type: pc-q35-rhel8.4.0

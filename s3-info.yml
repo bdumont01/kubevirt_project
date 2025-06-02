@@ -16,7 +16,7 @@
         aws_access_key: minio
         secret_key: minio123
         endpoint_url: "https://{{ s3_host }}"
-        bucket_name: images
+        bucket_name: mirror-bucket
         validate_certs: false
     - name: Pause for 2 minutes to find file
       ansible.builtin.pause:
