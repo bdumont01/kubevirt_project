@@ -13,5 +13,5 @@ cores: 2
 memory: 4Gi
 storage_class: longhorn-migratable
 volume_mode: Block
-disk_size: 25Gi
+disk_size: 30Gi
 access_mode: ReadWriteMany
